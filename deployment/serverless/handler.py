@@ -19,16 +19,19 @@ import runpod
 # ── Model loading (runs once when container starts) ──────────────
 
 MODEL_ID = "zai-org/GLM-4.6V-Flash"
+LOCAL_MODEL_DIR = "/models/GLM-4.6V-Flash"
 
 ROUND2_PROMPT = """这张图片是否属于 handjob 场景（女性用手给男性手淫）？
 注意排除乳交（胸部夹住生殖器）和口交。
 只回答 YES 或 NO"""
 
-print(f"Loading {MODEL_ID} ...")
+# Load from baked-in local dir, fall back to HF hub download
+model_path = LOCAL_MODEL_DIR if Path(LOCAL_MODEL_DIR).exists() else MODEL_ID
+print(f"Loading {model_path} ...")
 MODEL = Glm4vForConditionalGeneration.from_pretrained(
-    MODEL_ID, torch_dtype=torch.float16, device_map="auto",
+    model_path, torch_dtype=torch.float16, device_map="auto",
 )
-PROCESSOR = AutoProcessor.from_pretrained(MODEL_ID)
+PROCESSOR = AutoProcessor.from_pretrained(model_path)
 
 if torch.cuda.is_available():
     for i in range(torch.cuda.device_count()):
