@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# Model checkpoints
+models/*.pt
+models/*.pth
+
+# Data — all image/binary data stays local
+data/raw_frames/
+data/coarse_scan_results/
+data/coarse_positive/
+data/handjob_review/
+data/labels/
+data/dedup_removed/
+data/splits/
+data/pipeline_results/
+data/processing_log.json
+*.jpg
+*.jpeg
+*.png
+
+# Large archives
+*.zip
+
+# Keep text files in data/
+!data/saved_urls.md
+!data/new_clips.md
+!data/japan_collection.md
+
+# OS
+.DS_Store
+
+# Environment
+.env

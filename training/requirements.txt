@@ -1,0 +1,22 @@
+# TALON training environment
+# IMPORTANT: open-clip-torch >=3.3.0 required for SigLIP2 support.
+# ViT-L-14 (CLIP) uses force_quick_gelu=True + openai pretrained.
+# ViT-SO400M-14-SigLIP2-378 uses webli pretrained (no quick_gelu).
+# Different architectures have different activation functions and
+# normalize constants — always match training config at inference.
+#
+# NOTE: peft is NOT used — open_clip's MHA bypasses nn.Linear.forward(),
+# so peft LoRA never fires. We use manual LoRA instead.
+# For SigLIP2 (timm Attention), we use LoRALinear on attn.proj.
+#
+# Install: pip install -r requirements.txt
+
+open-clip-torch>=3.3.0
+timm>=0.9.12
+torch>=2.0
+torchvision>=0.15
+Pillow>=10.0
+scikit-learn>=1.3
+numpy>=1.24
+tqdm
+tensorboard

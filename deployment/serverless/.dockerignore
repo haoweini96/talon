@@ -1,0 +1,11 @@
+data/
+models/
+outputs/
+*.pt
+*.pth
+__pycache__
+.git
+venv/
+training/
+scripts/
+docs/
