@@ -6,7 +6,7 @@ RUN pip install --no-cache-dir \
     transformers \
     accelerate \
     Pillow \
-    huggingface_hub
+    "huggingface_hub[cli]"
 
 # Bake model weights into image (no download at cold start)
 RUN huggingface-cli download zai-org/GLM-4.6V-Flash
