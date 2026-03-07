@@ -11,6 +11,6 @@ RUN pip install --no-cache-dir \
 # Bake model weights into image (no download at cold start)
 RUN huggingface-cli download zai-org/GLM-4.6V-Flash
 
-COPY handler.py /handler.py
+COPY deployment/serverless/handler.py /handler.py
 
 CMD ["python", "-u", "/handler.py"]
