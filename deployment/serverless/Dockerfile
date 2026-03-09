@@ -1,5 +1,5 @@
 FROM runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04
-ARG CACHEBUST=2
+ARG CACHEBUST=3
 
 # Install Python dependencies + bake model weights into image
 RUN pip install --no-cache-dir \

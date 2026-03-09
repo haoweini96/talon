@@ -21,8 +21,11 @@ import runpod
 MODEL_ID = "zai-org/GLM-4.6V-Flash"
 LOCAL_MODEL_DIR = "/models/GLM-4.6V-Flash"
 
-ROUND2_PROMPT = """仔细观察这张图片，判断是否出现以下场景：女性的手接触或包裹男性生殖器（手可能遮挡大部分，仅露出部分）。
-排除乳交和口交。不要过度分析，根据视觉证据直接判断。
+ROUND2_PROMPT = """仔细观察这张图片，判断是否同时满足以下条件：
+1. 女性的手接触或包裹男性生殖器（手可能遮挡大部分，仅露出部分）
+2. 能完整看到女性的胸部（包括乳头）
+3. 不是乳交（胸部夹住生殖器）或口交
+不要过度分析，根据视觉证据直接判断。
 只回答 YES 或 NO，不要解释。"""
 
 # Load from baked-in local dir, fall back to HF hub download
