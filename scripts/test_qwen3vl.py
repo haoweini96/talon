@@ -133,7 +133,7 @@ def print_gpu_usage():
     if torch.cuda.is_available():
         for i in range(torch.cuda.device_count()):
             mem = torch.cuda.memory_allocated(i) / 1024**3
-            total = torch.cuda.get_device_properties(i).total_mem / 1024**3
+            total = torch.cuda.get_device_properties(i).total_memory / 1024**3
             print(f"  GPU {i}: {mem:.1f} / {total:.1f} GB used")
     else:
         print("  (No CUDA device)")
