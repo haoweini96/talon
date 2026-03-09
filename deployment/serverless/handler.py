@@ -21,9 +21,9 @@ import runpod
 MODEL_ID = "zai-org/GLM-4.6V-Flash"
 LOCAL_MODEL_DIR = "/models/GLM-4.6V-Flash"
 
-ROUND2_PROMPT = """这张图片是否属于 handjob 场景（女性用手给男性手淫）？
-注意排除乳交（胸部夹住生殖器）和口交。
-只回答 YES 或 NO"""
+ROUND2_PROMPT = """仔细观察这张图片，判断是否出现以下场景：女性的手接触或包裹男性生殖器（手可能遮挡大部分，仅露出部分）。
+排除乳交和口交。不要过度分析，根据视觉证据直接判断。
+只回答 YES 或 NO，不要解释。"""
 
 # Load from baked-in local dir, fall back to HF hub download
 model_path = LOCAL_MODEL_DIR if Path(LOCAL_MODEL_DIR).exists() else MODEL_ID
@@ -67,13 +67,14 @@ def predict_image(image_path: str) -> tuple[str, str]:
     inputs.pop("token_type_ids", None)
 
     with torch.no_grad():
-        output_ids = MODEL.generate(**inputs, max_new_tokens=128, do_sample=False)
+        output_ids = MODEL.generate(**inputs, max_new_tokens=512, do_sample=False)
 
     generated = output_ids[0, inputs["input_ids"].shape[1]:]
     raw = PROCESSOR.decode(generated, skip_special_tokens=True).strip()
 
-    # Strip <think>...</think> tags and parse YES/NO
+    # Strip <think>...</think> tags (including truncated unclosed tags)
     text = re.sub(r'<think>.*?</think>', '', raw, flags=re.DOTALL)
+    text = re.sub(r'<think>.*$', '', text, flags=re.DOTALL)
     text = text.upper().strip()
     if "YES" in text:
         result = "YES"
